@@ -1,0 +1,20 @@
+{{- if .Values.ttl.enabled -}}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: "{{ .Release.Name }}-ttl"
+spec:
+  schedule: "*/{{ .Values.ttl.minutes }} * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: "Never"
+          containers:
+            - name: yet-another-time-bomb
+              image: alpine/helm:2.13.1
+              command: ["helm", "delete", "--purge", "{{ .Release.Name }}"]
+              env:
+                - name: TILLER_HOST
+                  value: tiller-deploy.kube-system.svc
+{{- end -}}
