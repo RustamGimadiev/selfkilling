@@ -1,4 +1,4 @@
-## Selfkilling
+## About
 Yet another time bomb for automatic cleaning up Helm releases
 
 ### Usage
